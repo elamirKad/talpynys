@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Talpynys</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h1>Задания</h1>
     {% for task in tasks %}
         <div style="margin-left: 20px; margin-top: 10px; padding: 20px; background-color:#d4d4d4;">
@@ -20,5 +15,4 @@
             {% endif %}
         </div>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
