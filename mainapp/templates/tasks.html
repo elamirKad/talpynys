@@ -6,6 +6,19 @@
 </head>
 <body>
     <h1>Задания</h1>
-    <h3>{{ test }}</h3>
+    {% for task in tasks %}
+        <div style="margin-left: 20px; margin-top: 10px; padding: 20px; background-color:#d4d4d4;">
+            <a href="{{task.id}}">
+                <h1>{{ task.title }}</h1>
+            </a>
+            <p>Created: {{ task.created_date }}</p>
+            <p>Reward: {{ task.reward }} Tenge</p>
+            {% if task.completed %}
+            <p>Task Completed</p>
+            {% else %}
+            <p>In Progress</p>
+            {% endif %}
+        </div>
+    {% endfor %}
 </body>
 </html>

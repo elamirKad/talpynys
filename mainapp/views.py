@@ -15,4 +15,8 @@ def tasks(request, id=None):
         }
         return render(request, 'task.html', dictionary)
     else:
-        return render(request, 'tasks.html')
+        data = Task.objects.all()
+        dictionary = {
+            'tasks': data
+        }
+        return render(request, 'tasks.html', dictionary)
