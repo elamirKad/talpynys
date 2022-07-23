@@ -31,16 +31,22 @@ def settings(request):
         'last_name': account.last_name
     }
     if request.method == "POST":
-        if ProfilePic.objects.filter(username=username).exists():
-            profpic = ProfilePic.objects.get(username=username)
-            if profpic.image:
-                profpic.image.delete()
-            ProfilePic.objects.filter(username=username).delete()
-        pfp = request.FILES.get('pfp')
-        profilepic = ProfilePic()
-        profilepic.username = username
-        profilepic.image = pfp
-        profilepic.save()
-        return render(request, 'settings.html', dictionary)
+        if 'pfpbutton' in request.POST:
+            if ProfilePic.objects.filter(username=username).exists():
+                profpic = ProfilePic.objects.get(username=username)
+                if profpic.image:
+                    profpic.image.delete()
+                ProfilePic.objects.filter(username=username).delete()
+            pfp = request.FILES.get('pfp')
+            profilepic = ProfilePic()
+            profilepic.username = username
+            profilepic.image = pfp
+            profilepic.save()
+            return redirect('/dashboard/settings/')
+        elif 'namebutton' in request.POST:
+            account.first_name = request.POST.get('first_name')
+            account.last_name = request.POST.get('last_name')
+            account.save()
+            return redirect('/dashboard/settings/')
     else:
         return render(request, 'settings.html', dictionary)

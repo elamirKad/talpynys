@@ -4,6 +4,16 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="pfp" accept="image/*" required>
-        <button type="submit">Upload</button>
+        <button type="submit" name="pfpbutton">Upload</button>
+    </form>
+
+    <form method="post">
+        {% csrf_token %}
+        First Name:
+        <input type="text" name="first_name" value="{{ first_name }}" required>
+        <br>
+        Last Name:
+        <input type="text" name="last_name" value="{{ last_name }}" required>
+        <button type="submit" name="namebutton">Update</button>
     </form>
 {% endblock %}
