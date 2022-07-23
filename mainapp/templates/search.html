@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% block title %}Tasks{% endblock %}
+
+{% block title %}Search result{% endblock %}
 {% block content %}
-    <h1>Задания</h1>
     <form method="get" action="/app/search/">
         <input type="text" name="keywords" placeholder="Input keywords">
         <button type="submit">Search</button>
     </form>
+    <h3>Search Results:</h3>
     {% for task in tasks %}
         <div style="margin-left: 20px; margin-top: 10px; padding: 20px; background-color:#d4d4d4;">
             <a href="{{task.id}}">

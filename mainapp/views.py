@@ -63,3 +63,17 @@ def update(request, id=None):
                 'completed': task.completed,
             }
             return render(request, 'update.html', dictionary)
+
+def search(request):
+    if request.method == "GET":
+        keywords = request.GET.get('keywords')
+        data = Task.objects.filter(title__icontains=keywords)
+        dictionary = {
+            'tasks': data
+        }
+        return render(request, 'search.html', dictionary)
+    else:
+        dictionary = {
+
+        }
+        return render(request, 'search.html', dictionary)
