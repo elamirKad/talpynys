@@ -5,10 +5,13 @@
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
-    <div class="content">
-        {% block content %}
+        <div class="content">
+            {% if user.is_authenticated %}
+                <h3>Hello {{ user.username }}! <a href="/logout">Logout</a></h3>
+            {% endif %}
+            {% block content %}
 
-        {% endblock %}
-    </div>
+            {% endblock %}
+        </div>
 </body>
 </html>

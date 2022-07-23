@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}Create task{% endblock %}
-{% block content %}
-<form method="post" action="/app/create/">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit", name="save">Create task</button>
-</form>
-{% endblock %}
+
+{% if user.is_authenticated %}
+
+    {% block content %}
+    <form method="post" action="/app/create/">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit", name="save">Create task</button>
+    </form>
+    {% endblock %}
+
+{% else %}
+    Please <a href="/login">login</a> or <a href="/register">create</a> new account
+{% endif %}
