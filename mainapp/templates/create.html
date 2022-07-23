@@ -7,7 +7,7 @@
     <form method="post" action="/app/create/">
         {% csrf_token %}
         {{form.as_p}}
-        <button type="submit", name="save">Create task</button>
+        <button type="submit" name="save">Create task</button>
     </form>
     {% endblock %}
 

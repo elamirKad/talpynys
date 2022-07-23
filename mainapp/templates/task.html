@@ -11,4 +11,8 @@
     <h4>In Progress</h4>
     {% endif %}
     User: {{ username }}
+
+    {% if user.username == username %}
+        <a href="/app/update/{{id}}"><button type="button">Update</button></a>
+    {% endif %}
 {% endblock %}

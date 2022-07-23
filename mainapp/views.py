@@ -9,6 +9,7 @@ def tasks(request, id=None):
     if id:
         task = Task.objects.get(id=id)
         dictionary = {
+            'id': task.id,
             'title': task.title,
             'description': task.description,
             'created_date': task.created_date,
@@ -39,3 +40,26 @@ def create_task(request):
     else:
         form = CreateNewTask()
         return render(request, 'create.html', {'form':form})
+
+def update(request, id=None):
+    if id:
+        task = Task.objects.get(id=id)
+        if request.method == "POST":
+            task.title = request.POST.get('title')
+            task.description = request.POST.get('description')
+            task.reward = request.POST.get('reward')
+            if request.POST.get('completed') == "on":
+                task.completed = True
+            elif request.POST.get('completed') == None:
+                task.completed = False
+            task.save()
+            return redirect(f"/app/tasks/{id}")
+        else:
+            dictionary = {
+                'username': task.username,
+                'title': task.title,
+                'description': task.description,
+                'reward': task.reward,
+                'completed': task.completed,
+            }
+            return render(request, 'update.html', dictionary)
