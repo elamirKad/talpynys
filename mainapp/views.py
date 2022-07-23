@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .models import Task
 from .forms import CreateNewTask
 
+
 # Create your views here.
 def tasks(request, id=None):
     if id:
@@ -12,7 +13,8 @@ def tasks(request, id=None):
             'description': task.description,
             'created_date': task.created_date,
             'reward': task.reward,
-            'completed': task.completed
+            'completed': task.completed,
+            'username': task.username
         }
         return render(request, 'task.html', dictionary)
     else:
@@ -29,7 +31,9 @@ def create_task(request):
             title = form.cleaned_data["title"]
             description = form.cleaned_data["description"]
             reward = form.cleaned_data["reward"]
-            t = Task(title=title, description=description, reward=reward)
+            if request.user.is_authenticated:
+                username = request.user.username
+            t = Task(title=title, description=description, reward=reward, username=username)
             t.save()
         return redirect(f'/app/tasks/{t.id}')
     else:

@@ -6,4 +6,5 @@ class Task(models.Model):
     description = models.TextField()
     created_date = models.DateTimeField(auto_now=True)
     reward = models.FloatField()
+    username = models.CharField(max_length=100)
     completed = models.BooleanField(default=False)
