@@ -3,8 +3,20 @@
 {% block title %}Search result{% endblock %}
 {% block content %}
     <form method="get" action="/app/search/">
-        <input type="text" name="keywords" placeholder="Input keywords">
+        <input type="text" name="keywords" placeholder="Input keywords" value="{{ keywords }}">
         <button type="submit">Search</button>
+        <p>Filters:</p>
+
+        <p>Min reward</p>
+        <input name="minreward" type="number" min="0" value="0" id="minreward_range_output">
+        <input type="range" min="0" max="{{ max_reward }}" value="0" id="minreward_range">
+
+        <p>Max reward</p>
+        <input name="maxreward" type="number" min="0" value="{{ max_reward }}" id="maxreward_range_output">
+        <input type="range" min="0" max="{{ max_reward }}" value="{{ max_reward }}" id="maxreward_range">
+
+        <p>Hide done tasks</p>
+        <input type="checkbox" name="hidecompleted">
     </form>
     <h3>Search Results:</h3>
     {% for task in tasks %}
@@ -21,4 +33,19 @@
             {% endif %}
         </div>
     {% endfor %}
+    <script>
+        var minslider = document.getElementById("minreward_range");
+        var minoutput = document.getElementById("minreward_range_output");
+        minoutput.innerHTML = minslider.value;
+        var maxslider = document.getElementById("maxreward_range");
+        var maxoutput = document.getElementById("maxreward_range_output");
+        maxoutput.innerHTML = maxslider.value;
+
+        minslider.oninput = function() {
+          minoutput.value = this.value;
+        }
+        maxslider.oninput = function() {
+          maxoutput.value = this.value;
+        }
+    </script>
 {% endblock %}

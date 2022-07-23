@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Task
 from .forms import CreateNewTask
+from django.db.models import Max
 
 
 # Create your views here.
@@ -67,13 +68,27 @@ def update(request, id=None):
 def search(request):
     if request.method == "GET":
         keywords = request.GET.get('keywords')
-        data = Task.objects.filter(title__icontains=keywords)
+        if keywords:
+            data = Task.objects.filter(title__icontains=keywords)
+        else:
+            data = Task.objects.all()
+        max_reward = data.aggregate(Max('reward'))
+        if 'minreward' in request.GET:
+            data = data.exclude(reward__lte=request.GET.get('minreward'))
+        if 'maxreward' in request.GET:
+            data = data.exclude(reward__gt=request.GET.get('maxreward'))
+        if 'hidecompleted' in request.GET:
+            data = data.exclude(completed=True)
         dictionary = {
-            'tasks': data
+            'keywords': keywords,
+            'tasks': data,
+            'max_reward': max_reward['reward__max']
         }
         return render(request, 'search.html', dictionary)
     else:
+        max_reward = Task.objects.aggregate(Max('reward'))
         dictionary = {
-
+            'max_reward': max_reward['reward__max'],
+            'keywords': ''
         }
         return render(request, 'search.html', dictionary)
