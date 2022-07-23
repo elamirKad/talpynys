@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<h3>{{ username }}</h3>
-<p>{{ first_name }}</p>
-<p>{{ last_name }}</p>
+<h3>Username: {{ username }}</h3>
+<p>Name: {{ first_name }}</p>
+<p>Surname: {{ last_name }}</p>
+<p>Email: {{ email_address }}</p>
+<p>Exp: {{ experience }} Lvl: {{ level }}</p>
 {% if pfp %}
     <img src="{{ pfp.image.url}}" style="max-height:150px">
 {% else %}

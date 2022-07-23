@@ -14,11 +14,12 @@
 
     {% if user.username == username %}
         <a href="/app/update/{{id}}"><button type="button">Update</button></a>
-    {% elif user.is_authenticated %}
+    {% endif %}
+    {% if user.is_authenticated %}
         <form method="post">
             {% csrf_token %}
             Комментарий:
-            <textarea name="comment" rows="8" cols="50"></textarea>
+            <textarea name="comment" rows="5" cols="50"></textarea>
             <button type="submit">Откликнуться</button>
         </form>
     {% endif %}

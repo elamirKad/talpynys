@@ -16,4 +16,11 @@
         <input type="text" name="last_name" value="{{ last_name }}" required>
         <button type="submit" name="namebutton">Update</button>
     </form>
+
+    <form method="post">
+        {% csrf_token %}
+        Email:
+        <input type="email" name="email" value="{{ email_address }}" required>
+        <button type="submit" name="emailbutton">Update</button>
+    </form>
 {% endblock %}

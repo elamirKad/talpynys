@@ -1,15 +1,20 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .models import ProfilePic
+from .models import ProfilePic, AccountExperience
+from talpynys.levelcalc import calculate_level
 
 
 # Create your views here.
 def dashboard(request, username):
     account = User.objects.get(username=username)
+    exp = AccountExperience.objects.get(username=account)
     dictionary = {
         'username': account.username,
         'first_name': account.first_name,
-        'last_name': account.last_name
+        'last_name': account.last_name,
+        'email_address': account.email,
+        'experience': exp.experience,
+        'level': calculate_level(exp.experience)
     }
     try:
         pfp = ProfilePic.objects.get(username=username)
@@ -28,7 +33,8 @@ def settings(request):
     dictionary = {
         'username': account.username,
         'first_name': account.first_name,
-        'last_name': account.last_name
+        'last_name': account.last_name,
+        'email_address': account.email
     }
     if request.method == "POST":
         if 'pfpbutton' in request.POST:
@@ -46,6 +52,10 @@ def settings(request):
         elif 'namebutton' in request.POST:
             account.first_name = request.POST.get('first_name')
             account.last_name = request.POST.get('last_name')
+            account.save()
+            return redirect('/dashboard/settings/')
+        elif 'emailbutton' in request.POST:
+            account.email = request.POST.get('email')
             account.save()
             return redirect('/dashboard/settings/')
     else:
