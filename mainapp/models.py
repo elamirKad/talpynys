@@ -8,3 +8,8 @@ class Task(models.Model):
     reward = models.FloatField()
     username = models.CharField(max_length=100)
     completed = models.BooleanField(default=False)
+
+class Comment(models.Model):
+    task_id = models.CharField(max_length=20)
+    username = models.CharField(max_length=100)
+    comment = models.TextField()

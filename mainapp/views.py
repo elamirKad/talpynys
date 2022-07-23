@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Task
+from .models import Task, Comment
 from .forms import CreateNewTask
 from django.db.models import Max
 
@@ -18,6 +18,15 @@ def tasks(request, id=None):
             'completed': task.completed,
             'username': task.username
         }
+        try:
+            dictionary['comments'] = Comment.objects.filter(task_id=id)
+        except:
+            dictionary['comments'] = None
+        if request.method == "POST":
+            username = request.user.username
+            comment = Comment(task_id=id, username=username, comment=request.POST.get('comment'))
+            comment.save()
+            return redirect(f'/app/tasks/{id}')
         return render(request, 'task.html', dictionary)
     else:
         data = Task.objects.all()

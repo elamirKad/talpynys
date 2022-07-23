@@ -14,5 +14,20 @@
 
     {% if user.username == username %}
         <a href="/app/update/{{id}}"><button type="button">Update</button></a>
+    {% elif user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            Комментарий:
+            <textarea name="comment" rows="8" cols="50"></textarea>
+            <button type="submit">Откликнуться</button>
+        </form>
+    {% endif %}
+    {% if comments %}
+        {% for comment in comments %}
+            <div style="margin-top: 5px; margin-left: 10px; margin-right: 10px; padding: 5px; background-color: #ebebeb">
+                Author: {{ comment.username }} <br>
+                {{ comment.comment }}
+            </div>
+        {% endfor %}
     {% endif %}
 {% endblock %}
