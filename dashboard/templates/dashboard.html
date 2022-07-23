@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h3>{{ username }}</h3>
+<p>{{ first_name }}</p>
+<p>{{ last_name }}</p>
+{% if pfp %}
+    <img src="{{ pfp.image.url}}" style="max-height:150px">
+{% else %}
+    <img src="/media/images/default.jpg" style="max-height:150px">
+{% endif %}
+{% endblock %}
