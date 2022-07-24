@@ -5,7 +5,7 @@
         {% for exp, level in exps %}
             <div class="card mt-2" style="width: 80rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{ forloop.counter}}. {{exp.username}}</h5>
+                    <a href="/dashboard/{{exp.username}}"><h5 class="card-title">{{ forloop.counter}}. {{exp.username}}</h5></a>
                     <h6 class="card-subtitle mb-2 text-muted">Уровень: {{level}} </h6>
                     <p class="card-text">Опыт: {{exp.experience}} </p>
                 </div>

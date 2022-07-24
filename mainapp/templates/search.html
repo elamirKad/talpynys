@@ -55,7 +55,7 @@
                     <h6 class="card-subtitle mb-2 text-muted">Награда: {{ task.reward }} Тенге</h6>
                     <p class="card-text">Создано: {{ task.created_date }}</p>
                     {% if task.completed %}
-                        <p class="card-text">Занято</p>
+                        <p class="card-text"><mark>Занято</mark></p>
                     {% else %}
                         <p class="card-text">Ждет исполнителя</p>
                     {% endif %}
