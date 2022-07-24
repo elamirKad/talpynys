@@ -26,10 +26,12 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             {% if user.username == username %}
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <a href="/app/update/{{id}}"><button type="button" class="btn btn-outline-success me-md-2">Update</button></a>
+                                    <a href="/app/update/{{id}}"><button type="button" class="btn btn-outline-success me-md-2">Обновить</button></a>
                                 </div>
+                            {% else %}
+                                <button class="btn btn-outline-success me-md-2" type="button">Принять</button>
                             {% endif %}
-                            <button class="btn btn-outline-success me-md-2" type="button">Принять</button>
+
                         </div>
                     {% endif %}
 
