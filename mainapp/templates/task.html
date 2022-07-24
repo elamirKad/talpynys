@@ -1,34 +1,74 @@
 {% extends 'base.html' %}
 {% block title %}{{title}}{% endblock %}
 {% block content %}
-    <h1>{{ title }}</h1>
-    <p>Created: {{ created_date }}</p>
-    <p>{{ description }}</p>
-    <p>Reward: {{ reward }} Tenge</p>
-    {% if completed %}
-    <h4>Task Completed</h4>
-    {% else %}
-    <h4>In Progress</h4>
-    {% endif %}
-    User: {{ username }}
+    <div class="row mt-5">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ title }}</h5>
+                    <p class="card-text"> {{ description }} </p>
+                    <p class="card-text">Автор: {{ username }} </p>
+                    <p class="card-text"><small class="text-muted"><i>{{ created_date }}</i></small></p>
+                </div>
+                <div class="card-footer">
+                    <b><i>Награда:</i></b> {{ reward }} Тенге
+                    {% if completed %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            {% if user.username == username %}
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/app/update/{{id}}"><button type="button" class="btn btn-outline-success me-md-2">Update</button></a>
+                                </div>
+                            {% endif %}
+                            <button class="btn btn-outline-secondary me-md-2" type="button" disabled>Задание выполнено</button>
+                        </div>
+                    {% else %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            {% if user.username == username %}
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/app/update/{{id}}"><button type="button" class="btn btn-outline-success me-md-2">Update</button></a>
+                                </div>
+                            {% endif %}
+                            <button class="btn btn-outline-success me-md-2" type="button">Принять</button>
+                        </div>
+                    {% endif %}
 
-    {% if user.username == username %}
-        <a href="/app/update/{{id}}"><button type="button">Update</button></a>
-    {% endif %}
-    {% if user.is_authenticated %}
-        <form method="post">
-            {% csrf_token %}
-            Комментарий:
-            <textarea name="comment" rows="5" cols="50"></textarea>
-            <button type="submit">Откликнуться</button>
-        </form>
-    {% endif %}
-    {% if comments %}
-        {% for comment in comments %}
-            <div style="margin-top: 5px; margin-left: 10px; margin-right: 10px; padding: 5px; background-color: #ebebeb">
-                Author: {{ comment.username }} <br>
-                {{ comment.comment }}
-            </div>
-        {% endfor %}
-    {% endif %}
+                </div>
+              </div>
+        </div>
+        <div class="col-2"></div>
+        <div class="col-2"></div>
+        <div class="col-8 mt-5">
+            <h5><i>Комментарии: </i></h5>
+            {% if user.is_authenticated %}
+                <form method="post">
+                    {% csrf_token %}
+                    <textarea name="comment" id="" cols="1" rows="5" class="form-control" placeholder="Оставить комментарии как {{ user.username }}"></textarea>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-outline-success me-md-2 mt-1" type="submit">Отправить</button>
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+        <div class="col-2"></div>
+
+        <!-- Карточка для комментариев -->
+        {% if comments %}
+            {% for comment in comments %}
+                <div class="col-2"></div>
+                <div class="col-8 mt-2">
+                    <div class="card">
+                        <div class="card-header">
+                            {{comment.username}} (добавить время и дату)
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{comment.comment}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2"></div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
 {% endblock %}

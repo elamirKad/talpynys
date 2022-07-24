@@ -2,37 +2,70 @@
 
 {% block title %}Search result{% endblock %}
 {% block content %}
-    <form method="get" action="/app/search/">
-        <input type="text" name="keywords" placeholder="Input keywords" value="{{ keywords }}">
-        <button type="submit">Search</button>
-        <p>Filters:</p>
+    <div class="d-flex justify-content-center">
+        <div class="container-md">
+            <form method="get" action="/app/search/">
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text">Keywords</span>
+                    <input type="text" class="form-control" name="keywords" placeholder="Input keywords" value="{{ keywords }}">
+                    <button type="submit" class="btn btn-outline-secondary">Search</button>
+                </div>
 
-        <p>Min reward</p>
-        <input name="minreward" type="number" min="0" value="0" id="minreward_range_output">
-        <input type="range" min="0" max="{{ max_reward }}" value="0" id="minreward_range">
 
-        <p>Max reward</p>
-        <input name="maxreward" type="number" min="0" value="{{ max_reward }}" id="maxreward_range_output">
-        <input type="range" min="0" max="{{ max_reward }}" value="{{ max_reward }}" id="maxreward_range">
+                <label class="form-label">Filters:</label>
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text">Min Reward</span>
+                    <input name="minreward" class="form-control" type="number" min="0" value="0" id="minreward_range_output">
+                    <div class="form-control">
+                        <input type="range" class="form-range" min="0" max="{{ max_reward }}" value="0" id="minreward_range">
+                    </div>
+                </div>
 
-        <p>Hide done tasks</p>
-        <input type="checkbox" name="hidecompleted">
-    </form>
-    <h3>Search Results:</h3>
-    {% for task in tasks %}
-        <div style="margin-left: 20px; margin-top: 10px; padding: 20px; background-color:#d4d4d4;">
-            <a href="{{task.id}}">
-                <h1>{{ task.title }}</h1>
-            </a>
-            <p>Created: {{ task.created_date }}</p>
-            <p>Reward: {{ task.reward }} Tenge</p>
-            {% if task.completed %}
-            <p>Task Completed</p>
-            {% else %}
-            <p>In Progress</p>
-            {% endif %}
+                <div class="input-group mb-3 w-50">
+                    <span class="input-group-text">Min Reward</span>
+                    <input name="maxreward" class="form-control" type="number" min="0" value="{{ max_reward }}" id="maxreward_range_output">
+                    <div class="form-control">
+                        <input type="range" class="form-range" min="0" max="{{ max_reward }}" value="{{ max_reward }}" id="maxreward_range">
+                    </div>
+
+                </div>
+
+                <div class="input-group mb-3 w-25">
+                    <span class="input-group-text">Hide done tasks</span>
+                    <div class="input-group-text">
+                        <input type="checkbox" class="form-check-input mt-0" name="hidecompleted">
+                    </div>
+                </div>
+                <div class="input-group mb-3 w-25">
+                    <span class="input-group-text">Hide unavailable tasks</span>
+                    <div class="input-group-text">
+                        <input type="checkbox" class="form-check-input mt-0" name="levelhide">
+                    </div>
+                </div>
+            </form>
         </div>
-    {% endfor %}
+    </div>
+
+    <div class="container-md">
+        <h4>Search Results:</h4>
+        {% for task in tasks %}
+            <div class="card" style="width: 18rem; display:inline-block; margin-top: 10px; margin-right:10px">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Reward: {{ task.reward }} Tenge</h6>
+                    <p class="card-text">Created: {{ task.created_date }}</p>
+                    {% if task.completed %}
+                        <p class="card-text">Task Completed</p>
+                    {% else %}
+                        <p class="card-text">In Progress</p>
+                    {% endif %}
+                    <a href="{{task.id}}" class="card-link">
+                        <button type="button" class="btn btn-outline-primary">Открыть</button>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
     <script>
         var minslider = document.getElementById("minreward_range");
         var minoutput = document.getElementById("minreward_range_output");

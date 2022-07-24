@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Task, Comment
-from .forms import CreateNewTask
 from django.db.models import Max
 
 
@@ -37,19 +36,17 @@ def tasks(request, id=None):
 
 def create_task(request):
     if request.method == "POST":
-        form = CreateNewTask(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data["title"]
-            description = form.cleaned_data["description"]
-            reward = form.cleaned_data["reward"]
-            if request.user.is_authenticated:
-                username = request.user.username
+        if request.user.is_authenticated:
+            username = request.user.username
+            title = request.POST.get('title')
+            description = request.POST.get('description')
+            reward = request.POST.get('reward')
             t = Task(title=title, description=description, reward=reward, username=username)
             t.save()
-        return redirect(f'/app/tasks/{t.id}')
+            return redirect(f'/app/tasks/{t.id}')
+        return redirect('/app/create/')
     else:
-        form = CreateNewTask()
-        return render(request, 'create.html', {'form':form})
+        return render(request, 'create.html')
 
 def update(request, id=None):
     if id:

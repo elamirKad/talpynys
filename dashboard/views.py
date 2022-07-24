@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .models import ProfilePic, AccountExperience
-from talpynys.levelcalc import calculate_level
+from talpynys.levelcalc import calculate_level, calculate_exp
 
 
 # Create your views here.
@@ -14,7 +14,9 @@ def dashboard(request, username):
         'last_name': account.last_name,
         'email_address': account.email,
         'experience': exp.experience,
-        'level': calculate_level(exp.experience)
+        'required_exp': calculate_exp(calculate_level(exp.experience) + 1),
+        'level': calculate_level(exp.experience),
+        'level_bar': round((exp.experience/calculate_exp(calculate_level(exp.experience) + 1))*100)
     }
     try:
         pfp = ProfilePic.objects.get(username=username)

@@ -3,24 +3,41 @@
 {% block title %}Update{% endblock %}
 {% block content %}
     {% if user.username == username %}
-        <form method="POST" action="">
-            {% csrf_token %}
-            Title:
-            <input type="text" name="title" value="{{ title }}"><br>
-            Description:
-            <input type="text" name="description" value="{{ description }}"><br>
-            Reward:
-            <input type="number" name="reward" value="{{ reward }}"><br>
-            Completed:
-            {% if completed %}
-                <input type="checkbox" name="completed" checked>
-            {% else %}
-                <input type="checkbox" name="completed">
-            {% endif %}
-            <br>
-            <button type="submit" name="update">Update</button>
-        </form>
+        <div class="row mt-5">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Название заказа</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="title" value="{{ title }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Полное описание заказа</label>
+                        <textarea class="form-control" id="" name="description">{{ description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Награждение за заказ</label>
+                        <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="reward" value="{{ reward }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Дедлайн заказа</label>
+                        <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="" name="deadline">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Заказ выполнен</label>
+                        {% if completed %}
+                            <input type="checkbox" class="form-check-input mt-0" id="exampleFormControlInput1" name="completed" checked>
+                        {% else %}
+                            <input type="checkbox" class="form-check-input mt-0" id="exampleFormControlInput1" name="completed">
+                        {% endif %}
+                    </div>
+                    <button type="submit" name="update" class="btn btn-outline-success">Обновить</button>
+                </form>
+            </div>
+        </div>
+
     {% else %}
-        <h2>You cannot edit this task</h2>
+        <h5>You cannot edit this task</h5>
     {% endif %}
 {% endblock %}

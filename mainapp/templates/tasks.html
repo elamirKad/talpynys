@@ -1,23 +1,33 @@
 {% extends 'base.html' %}
 {% block title %}Tasks{% endblock %}
 {% block content %}
-    <h1>Задания</h1>
-    <form method="get" action="/app/search/">
-        <input type="text" name="keywords" placeholder="Input keywords">
-        <button type="submit">Search</button>
-    </form>
-    {% for task in tasks %}
-        <div style="margin-left: 20px; margin-top: 10px; padding: 20px; background-color:#d4d4d4;">
-            <a href="{{task.id}}">
-                <h1>{{ task.title }}</h1>
-            </a>
-            <p>Created: {{ task.created_date }}</p>
-            <p>Reward: {{ task.reward }} Tenge</p>
-            {% if task.completed %}
-            <p>Task Completed</p>
-            {% else %}
-            <p>In Progress</p>
-            {% endif %}
-        </div>
-    {% endfor %}
+    <div class="container-md d-flex justify-content-center" style="margin-top: 30px">
+        <form method="get" action="/app/search/">
+            <div class="input-group mb-3">
+                <span class="input-group-text">Keywords</span>
+                <input type="text" class="form-control" name="keywords" placeholder="Input keywords">
+                <button type="submit" class="btn btn-outline-primary">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="container-md">
+        {% for task in tasks %}
+            <div class="card" style="width: 18rem; display:inline-block; margin-top: 10px; margin-right:10px">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Reward: {{ task.reward }} Tenge</h6>
+                    <p class="card-text">Created: {{ task.created_date }}</p>
+                    {% if task.completed %}
+                        <p class="card-text">Task Completed</p>
+                    {% else %}
+                        <p class="card-text">In Progress</p>
+                    {% endif %}
+                    <a href="{{task.id}}" class="card-link">
+                        <button type="button" class="btn btn-outline-primary">Открыть</button>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

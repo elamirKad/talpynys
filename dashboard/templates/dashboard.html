@@ -1,14 +1,60 @@
 {% extends 'base.html' %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<h3>Username: {{ username }}</h3>
-<p>Name: {{ first_name }}</p>
-<p>Surname: {{ last_name }}</p>
-<p>Email: {{ email_address }}</p>
-<p>Exp: {{ experience }} Lvl: {{ level }}</p>
-{% if pfp %}
-    <img src="{{ pfp.image.url}}" style="max-height:150px">
-{% else %}
-    <img src="/media/images/default.jpg" style="max-height:150px">
-{% endif %}
+
+
+    <div class="row mt-5">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <div class="card-header text-center text-muted">
+                <i>{{ last_name }} {{ first_name }}</i>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-3">
+                        {% if pfp %}
+                            <img src="{{ pfp.image.url}}" style="width: 10rem ;" class="img-fluid rounded" alt="">
+                        {% else %}
+                            <img src="/media/images/default.jpg" style="width: 10rem ;" class="img-fluid rounded" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="col-5 mt-3">
+                        <p class="card-text"> <b><i>Пользователь:</i></b> {{ username }} </p>
+                        <p class="card-text"> <b><i>Место:</i></b> Казахстан </p>
+                        <p class="card-text"> <b><i>Клан:</i></b> Окжетпес </p>
+                        <p class="card-text"> <b><i>Почта:</i></b> {{ email_address }} </p>
+                    </div>
+                    <div class="col-3 my-auto text-center ">
+                        <button class="btn btn-outline-success btn-circle" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">{{ level }} lvl</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+
+        <div class="col-2"></div>
+        <div class="col-8 mt-5">
+            <div class="card-body">
+                <h5>Обо мне</h5>
+                <p class="card-text">
+                    Текст (добавить описание профилю)
+                </p>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+          <h5 id="offcanvasRightLabel text-muted">{{ level }} lvl</h5>
+          <div class="text-muted">{{ experience }}/{{ required_exp }} exp</div>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: {{level_bar}}%;" aria-valuenow="{{level_bar}}" aria-valuemin="0" aria-valuemax="100">{{level_bar}}%</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

@@ -4,11 +4,33 @@
 {% if user.is_authenticated %}
 
     {% block content %}
-    <form method="post" action="/app/create/">
-        {% csrf_token %}
-        {{form.as_p}}
-        <button type="submit" name="save">Create task</button>
-    </form>
+
+    <div class="row mt-5">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h3>Форма оформления заказа</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Название заказа</label>
+                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="" name="title">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Полное описание заказа</label>
+                    <textarea class="form-control" id="" name="description"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Награждение за заказ</label>
+                    <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="reward">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label">Дедлайн заказа</label>
+                    <input type="date" class="form-control" id="exampleFormControlInput1" placeholder="" name="deadline">
+                </div>
+                <button type="submit" name="save" class="btn btn-outline-success">Создать</button>
+            </form>
+        </div>
+    </div>
     {% endblock %}
 
 {% else %}
