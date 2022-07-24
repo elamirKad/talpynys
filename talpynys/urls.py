@@ -24,7 +24,8 @@ urlpatterns = [
     path('', include('landing.urls')),
     path('register/', include('register.urls')),
     path('', include('django.contrib.auth.urls')),
-    path('dashboard/', include('dashboard.urls'))
+    path('dashboard/', include('dashboard.urls')),
+    path('chat/', include('chat.urls'))
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

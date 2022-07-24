@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'mainapp',
     'landing',
     'register',
-    'dashboard'
+    'dashboard',
+    'chat'
 ]
 
 MIDDLEWARE = [
