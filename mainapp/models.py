@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Task(models.Model):
@@ -13,3 +14,7 @@ class Comment(models.Model):
     task_id = models.CharField(max_length=20)
     username = models.CharField(max_length=100)
     comment = models.TextField()
+
+class Executor(models.Model):
+    username = models.ForeignKey(User, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)

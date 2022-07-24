@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Task, Comment
+from .models import Task, Comment, Executor
 from django.db.models import Max
 
 
@@ -22,9 +22,17 @@ def tasks(request, id=None):
         except:
             dictionary['comments'] = None
         if request.method == "POST":
-            username = request.user.username
-            comment = Comment(task_id=id, username=username, comment=request.POST.get('comment'))
-            comment.save()
+            if 'send_comment' in request.POST:
+                username = request.user.username
+                comment = Comment(task_id=id, username=username, comment=request.POST.get('comment'))
+                comment.save()
+            elif 'accept' in request.POST:
+                username = request.user
+                if not Executor.objects.filter(username=username).exists():
+                    executor = Executor(username=username, task=task)
+                    executor.save()
+                    task.completed = True
+                    task.save()
             return redirect(f'/app/tasks/{id}')
         return render(request, 'task.html', dictionary)
     else:
