@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Top{% endblock %}
+{% block content %}
+    <div class="container-md mt-5">
+        {% for exp, level in exps %}
+            <div class="card mt-2" style="width: 80rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ forloop.counter}}. {{exp.username}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Уровень: {{level}} </h6>
+                    <p class="card-text">Опыт: {{exp.experience}} </p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

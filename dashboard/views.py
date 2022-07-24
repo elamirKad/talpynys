@@ -62,3 +62,11 @@ def settings(request):
             return redirect('/dashboard/settings/')
     else:
         return render(request, 'settings.html', dictionary)
+
+def leaderboard(request):
+    exps = AccountExperience.objects.order_by('-experience')
+    levels = []
+    for exp in exps:
+        levels.append(calculate_level(exp.experience))
+    res = zip(exps, levels)
+    return render(request, 'top.html', {'exps': res})
