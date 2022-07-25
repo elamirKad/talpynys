@@ -1,0 +1,1 @@
+gunicorn talpynys.wsgi --log-file -
