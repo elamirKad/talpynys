@@ -1,1 +1,1 @@
-web: gunicorn --chdir talpynys wsgi:app
+web: gunicorn --chdir talpynys wsgi:application
