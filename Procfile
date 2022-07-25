@@ -1,1 +1,1 @@
-gunicorn talpynys.wsgi --log-file -
+web: gunicorn --chdir talpynys wsgi:app
